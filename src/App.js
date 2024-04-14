@@ -7,7 +7,7 @@ function App() {
     <div>
      
       <Flex
-        bg="blue.500"
+        bg="blue.300"
         p="4"
         alignItems="center"
         position="fixed" 

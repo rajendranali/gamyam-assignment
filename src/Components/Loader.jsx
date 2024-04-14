@@ -3,7 +3,7 @@ import React from 'react'
 
 const Loader = ({ loading }) => {
   return (
-    <div>
+    <div style={{padding:"30px"}}>
       {loading && (
         <Flex
           position="fixed"
@@ -16,10 +16,10 @@ const Loader = ({ loading }) => {
           width="100%"
         >
           <Spinner
-            thickness="4px"
+            thickness="10px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="green.500"
+            color="blue.500"
             size="xl"
           />
         </Flex>

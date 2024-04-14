@@ -30,7 +30,7 @@ const Cards = ({ card }) => {
       prevIndex === 0 ? card?.land_media?.length - 1 : prevIndex - 1
     );
   };
-  console.log("Cards", card);
+ 
   return (
     <Card maxW="sm" borderRadius="lg" overflow="hidden" padding="2">
       <Box
@@ -141,7 +141,7 @@ const Cards = ({ card }) => {
           </Flex>
         </Flex>
       </CardBody>
-      <CardFooter marginTop={"-4 0px"}>
+      <CardFooter marginTop={"-40px"}>
         {" "}
         {/* Adjust padding top as needed */}
         <ButtonGroup spacing="2">

@@ -9,6 +9,7 @@ const CardList = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [apiCallInProgress, setApiCallInProgress] = useState(false);
+  const [maxpage,setMaxpage]=useState(null)
 
   const fetchMoreData = useCallback(async () => {
     setApiCallInProgress(true);
@@ -16,7 +17,10 @@ const CardList = () => {
     try {
       const newData = await fetchDataFromAPI(page);
       updateData(newData);
-      setPage((prevPage) => prevPage + 1);
+      if(page<maxpage){
+        setPage((prevPage) => prevPage + 1);
+      }
+     
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle error gracefully
@@ -36,6 +40,7 @@ const CardList = () => {
 
   const fetchDataFromAPI = async (page) => {
     const newData = await fetchMoreDataFromAPI(page);
+    setMaxpage(Math.ceil(newData.count/ 10))
     return newData.results;
   };
 
@@ -56,10 +61,10 @@ const CardList = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleInfiniteScroll);
     return () => window.removeEventListener("scroll", handleInfiniteScroll);
-  }, [apiCallInProgress]); 
+  }, [apiCallInProgress]);
 
   useEffect(() => {
-    fetchMoreData(); 
+    fetchMoreData();
   }, []);
 
   useEffect(() => {
@@ -67,30 +72,29 @@ const CardList = () => {
       fetchMoreData();
     }
   }, [apiCallInProgress, fetchMoreData]);
-
+console.log("maxpage",maxpage,page)
   return (
-<Box position="relative" textAlign="center"> 
-  <Grid
-    templateColumns={{
-      base: "repeat(1, 1fr)",
-      md: "repeat(2, 1fr)",
-      lg: "repeat(3, 1fr)",
-      xl: "repeat(4, 1fr)",
-    }}
-    gap={6}
-    width="96%"
-    padding={2}
-    justifyContent="center" 
-    alignContent="center"
-    margin="0 auto" 
-  >
-    {cards.map((card) => (
-      <Cards key={card.id} card={card} />
-    ))}
-  </Grid>
-  {loading && <Loader loading={loading} />}
-</Box>
-
+    <Box position="relative" textAlign="center">
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+          xl: "repeat(4, 1fr)",
+        }}
+        gap={6}
+        width="96%"
+        padding={2}
+        justifyContent="center"
+        alignContent="center"
+        margin="0 auto"
+      >
+        {cards.map((card) => (
+          <Cards key={card.id} card={card} />
+        ))}
+      </Grid>
+      {loading && <Loader loading={loading} />}
+    </Box>
   );
 };
 
